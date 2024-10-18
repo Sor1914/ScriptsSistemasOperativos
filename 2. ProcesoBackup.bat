@@ -2,11 +2,11 @@
 setlocal enabledelayedexpansion
 
 :: Configuración de Variables
-set "PG_DUMP_PATH=C:\Program Files\PostgreSQL\13\bin\pg_dump.exe"
+set "PG_DUMP_PATH=C:\Program Files\Odoo 17.0.20240822\PostgreSQL\bin\pg_dump.exe"
 set "BACKUP_DIR=C:\OdooBackups\central"
-set "DB_USER=opengpg"
+set "DB_USER=openpg"
 set "DB_PASSWORD=openpgpwd"
-set "DB_NAME=odoo_central_db"
+set "DB_NAME=Odoo"
 set "DATE=%date:~10,4%-%date:~7,2%-%date:~4,2%"
 
 :: Crear el directorio de backup si no existe
