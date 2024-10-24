@@ -1,6 +1,6 @@
 @echo off
 :: Variables
-set ftp_server=192.168.1.16
+set ftp_server=192.168.10.102
 set ftp_directory=/
 set local_directory=C:\Odoo
 
