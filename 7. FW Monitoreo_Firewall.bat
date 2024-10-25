@@ -31,7 +31,7 @@ if errorlevel 1 (
     )
 
     rem Enviar alerta emergente con el cambio detectado
-    powershell -command "Add-Type –AssemblyName PresentationFramework; [System.Windows.MessageBox]::Show('ALERTA: Cambio en el firewall detectado: !cambios!')"
+    msg * "ALERTA: Cambio en el firewall detectado: !cambios!"
     
     rem Actualizar el estado guardado
     copy "%ruta%\firewall_state.txt" "%ruta%\firewall_last.txt"
