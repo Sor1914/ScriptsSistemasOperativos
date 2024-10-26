@@ -1,23 +1,47 @@
 @echo off
-:: Script para agregar nuevas reglas de firewall
+echo == Script para Crear Reglas de Firewall ==
+echo.
 
-echo Configurando reglas del firewall...
+:tipo_regla
+echo Seleccione el tipo de regla:
+echo [1] Entrada
+echo [2] Salida
+set /p tipo_regla="Ingrese su selección (1 o 2): "
 
-:: Permitir conexiones en el puerto 22 (SSH)
-netsh advfirewall firewall add rule name="Permitir SSH" protocol=TCP dir=in localport=22 action=allow
+if "%tipo_regla%"=="1" (
+    set directionType=in
+) else if "%tipo_regla%"=="2" (
+    set directionType=out
+) else (
+    echo Selección inválida. Por favor, ingrese 1 o 2.
+    goto tipo_regla
+)
 
-:: Bloquear conexiones entrantes en el puerto 3389 (Escritorio Remoto)
-netsh advfirewall firewall add rule name="Bloquear Escritorio Remoto" protocol=TCP dir=in localport=3389 action=block
+:tipo_accion
+echo Seleccione la acción de la regla:
+echo [1] Permitir
+echo [2] Bloquear
+set /p tipo_accion="Ingrese su selección (1 o 2): "
 
-:: Permitir tráfico saliente para el puerto 53 (DNS)
-netsh advfirewall firewall add rule name="Permitir DNS" protocol=UDP dir=out localport=53 action=allow
+if "%tipo_accion%"=="1" (
+    set actionType=allow
+) else if "%tipo_accion%"=="2" (
+    set actionType=block
+) else (
+    echo Selección inválida. Por favor, ingrese 1 o 2.
+    goto tipo_accion
+)
 
-:: Denegar tráfico entrante para cualquier puerto desde una IP específica
-netsh advfirewall firewall add rule name="Bloquear IP Maliciosa" dir=in action=block remoteip=192.168.1.100
+set /p ruleName="Ingrese el nombre para la regla de firewall: "
+set /p ipAddress="Ingrese la dirección IP a aplicar en la regla: "
 
-:: Permitir todo el tráfico en el puerto 443 (HTTPS) solo desde una IP específica
-netsh advfirewall firewall add rule name="Permitir HTTPS desde IP" protocol=TCP dir=in localport=443 remoteip=192.168.1.101 action=allow
+echo Configurando la regla de firewall...
+netsh advfirewall firewall add rule name="%ruleName%" ^
+    dir=%directionType% ^
+    action=%actionType% ^
+    remoteip=%ipAddress% ^
+    protocol=any ^
+    profile=any
 
-echo Reglas de firewall aplicadas correctamente.
-
+echo La regla de firewall ha sido creada con éxito.
 pause
